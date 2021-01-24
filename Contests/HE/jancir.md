@@ -59,14 +59,110 @@ int main()
 > If the distance between first and second king is 1 then it is first
 > Else both play optimally so draw.
 
-4. https://www.hackerearth.com/practice/algorithms/string-algorithm/basics-of-string-manipulation/practice-problems/approximate/kolmogorov-78780f09/description/
-
+4. https://www.hackerearth.com/practice/algorithms/string-algorithm/string-searching/practice-problems/algorithm/make-them-equal-too-89585e71/description/
 ```
-https://www.hackerearth.com/practice/algorithms/string-algorithm/basics-of-string-manipulation/practice-problems/approximate/kolmogorov-78780f09/editorial/
+#include<bits/stdc++.h>
+using namespace std;
+int merge(int arr[],int temp[],int l,int mid,int h)
+{
+	 int i=l;
+	 int j=mid;
+	 int k=l;
+	 int res=0;
+	 while(i<=mid-1 && j<=h)
+	 {
+		 if(arr[i]<=arr[j])
+		{
+			temp[k++]=arr[i++];
+		}
+		else{
+			temp[k++]=arr[j++];
+			res+=mid-i;
+		}
+	 }
+	 while(i<=mid-1)
+	 {
+		 temp[k++]=arr[i++];
+	 }
+	 while(j<=h)
+	 {
+		 temp[k++]=arr[j++];
+	 }
+	 for(int i=l;i<=h;i++)
+	 arr[i]=temp[i];
+	 return res;
+}
+int _mergeSort(int arr[],int temp[],int l,int h)
+{
+	int inv_count=0;
+	if(l<h)
+	{
+		int mid=(l+h)/2;
+		inv_count=_mergeSort(arr,temp,l,mid);
+		inv_count+=_mergeSort(arr,temp,mid+1,h);
+		inv_count+=merge(arr,temp,l,mid+1,h);
+	}
+	return inv_count;
+}
+int _mergeSort_Helper(int arr[],int n)
+{
+	int temp[n];
+	return _mergeSort(arr,temp,0,n-1);
+}
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n;
+		cin>>n;
+		string a,b;
+		cin>>a>>b;
+		int freq[26];
+		memset(freq,0,sizeof(freq));
+		int i;
+		for(i=0;i<n;i++)
+		{
+			freq[a[i]-'a']++;
+			if(freq[a[i]-'a']>1)
+			break;
+		}
+		//cout<<i<<endl;
+		if(i==n)
+		{
+			int arr[n];
+			int brr[n];
+			for(int i=0;i<n;i++)
+			{
+				arr[i]=(int)a[i];
+				brr[i]=(int)b[i];
+			}
+			int x=_mergeSort_Helper(arr,n);
+			int y=_mergeSort_Helper(brr,n);
+			if((abs(x-y))%2==0)
+			cout<<"YES"<<endl;
+			else
+			cout<<"NO"<<endl;
+		}	
+		else
+		{
+			sort(a.begin(),a.end());
+			sort(b.begin(),b.end());
+			if(a==b)
+			cout<<"YES"<<endl;
+			else
+			cout<<"NO"<<endl;
+		}
+	}
+}
 
 ```
 
 5. https://www.hackerearth.com/practice/algorithms/string-algorithm/string-searching/practice-problems/algorithm/make-them-equal-ac0bab4a/
+
+
 ```
 
 // Write your code here
@@ -155,4 +251,41 @@ while t > 0:
 
 
 ```
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n,q;
+		cin>>n>>q;
+		int arr[n];
+		int ans=0;
+		unordered_map<int,int> mp;
+		for(int i=0;i<n;i++)
+		{
+			cin>>arr[i];
+			mp[arr[i]]++;
+			if(mp[arr[i]]==1)
+			ans++;
+		}
+		
+		for(int i=0;i<q;i++)
+		{
+			int l,r;
+			cin>>l>>r;
+			l--;
+			mp[arr[l]]--;
+			if(mp[arr[l]]==0)
+			ans--;
+			arr[l]=r;
+			mp[arr[l]]++;
+			if(mp[arr[l]]==1)
+			ans++;
+			cout<<ans+1<<endl;
+		}
+	}
+}
 ```
