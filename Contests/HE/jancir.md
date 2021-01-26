@@ -245,6 +245,7 @@ while t > 0:
 
 
 ```
+
 ```
 
 8. https://www.hackerearth.com/practice/data-structures/arrays/1-d/practice-problems/algorithm/tournament-and-ranks-67cd4b7e/
