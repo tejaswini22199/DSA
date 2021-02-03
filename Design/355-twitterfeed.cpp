@@ -1,0 +1,90 @@
+//https://leetcode.com/problems/design-twitter/discuss/1047355/c%2B%2B-soln-using-minheap-with-greater96-acceptance
+class Twitter {
+    private:
+    unordered_map<int,set<int>> followers;
+    unordered_map<int,vector<pair<int,int>>> tweets;
+    long time;
+public:
+    /** Initialize your data structure here. */
+    Twitter() {
+        time=0;
+    }
+    
+    /** Compose a new tweet. */
+    void postTweet(int userId, int tweetId) {
+        time++;
+        tweets[userId].push_back({time,tweetId}); 
+        //{1,5} {1,3} {1,101} {1,13},{1,10},{1,2},{1,94},{1,505},{1,333},{1,22},{1,11}
+    }
+    
+    /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
+    vector<int> getNewsFeed(int userId) {
+        vector<int> res;
+        //priority_queue<pair<int,int>> pq;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        for(auto it:tweets[userId])
+        {
+            if(pq.size()<10)
+            pq.push(it);
+            else
+               {
+                   if(it.first>pq.top().first)
+                    {
+                        pq.pop();
+                        pq.push(it);
+                    }
+                }
+        }
+        for(auto it:followers[userId])
+        {
+            for(auto itr:tweets[it])
+            {
+                if(pq.size()<10)
+                    pq.push(itr);
+               else
+               {
+                   if(itr.first>pq.top().first)
+                    {
+                        pq.pop();
+                        pq.push(itr);
+                    }
+                }
+            }
+        }
+        while(pq.size()>0)
+        {
+            res.push_back(pq.top().second);
+            if(res.size()==10)
+                break;
+            pq.pop();
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+    
+    /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
+    void follow(int followerId, int followeeId) {
+        if(followerId!=followeeId)
+        {
+            followers[followerId].insert(followeeId);
+            //cout<<followers[followerId]<<endl;
+        }
+    }
+    
+    /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
+    void unfollow(int followerId, int followeeId) {
+        if(followerId!=followeeId)
+        {
+            followers[followerId].erase(followeeId);
+        }
+    }
+};
+
+/**
+ * Your Twitter object will be instantiated and called as such:
+ * Twitter* obj = new Twitter();
+ * obj->postTweet(userId,tweetId);
+ * vector<int> param_2 = obj->getNewsFeed(userId);
+ * obj->follow(followerId,followeeId);
+ * obj->unfollow(followerId,followeeId);
+ */
