@@ -1,0 +1,2 @@
+> sde sheet
+* N-queens
