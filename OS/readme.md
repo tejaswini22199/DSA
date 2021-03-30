@@ -1,0 +1,109 @@
+> Difference between process and thread?
+* Process: Program which is under execution ,It has its own control block,stack and address space. using message passing and shared memory, process communicate between them. 
+*  Thread: segment of process, it doesnot have a control block of its own. It shares parents control block code section data section and files are shared.Less context switch time.Process execution is faster f we use multiple threads because processes are run parallely using multiple threads.Each thread has its own stack space registers and PC.Communication between processes is easy compared to between the processes.
+
+> Benefits of Multithreaded processes in OS?
+* It increases responsiveness because multiple threads run parallely and since they have shared memory communication is easy and context switch time is also less when multiple threads are present more efficiency since all the tasks handled at the same time by worker threads.Cost is less compared to multiprocess.
+
+> What is multi programming?
+* Whenever a process goes for block/wait state the cpu remains idle in a non multi programming system, but in a multi programming system it is not like that cpu handles other processes also so more efficiency. Switching the processes
+> What is multi processing?
+* Multi Processing is used when we need to execute more than one process smultaneously. Having multiple processors
+> What is multi Tasking?
+* Multi Tasking is used to run multiple processes by defining a time quantum after which processes change
+> Multi Threading example from gfg
+* We can think of threads as child processes that share the parent process resources but execute independently. Now take the case of a GUI. Say we are performing a calculation on the GUI (which is taking very long time to finish). Now we can not interact with the rest of the GUI until this command finishes its execution. To be able to interact with the rest of the GUI, this command of calculation should be assigned to a separate thread. So at this point of time, 2 threads will be executing i.e. one for calculation, and one for the rest of the GUI. Hence here in a single process, we used multiple threads for multiple functionality.
+
+> Deadlock
+* Deadlock is where 2 processes wait for other process to release the resources and hold the resources that they have and other prcess need the resources and they dont start execution and they dont release resources.
+>Conditions
+* Hold and wait:A process must be simultaneously holding at least one resource and waiting for at least one resource that is currently being held by some other process.
+* Mutual Exclusive:At least one resource must be held in a non-sharable mode. If any other process requests this resource, then that process must wait for the resource to be released.
+* No premption:Once a process is holding a resource ( i.e. once its request has been granted ), then that resource cannot be taken away from that process until the process voluntarily releases it.
+* Circular Wait:A set of processes { P0, P1, P2, . . ., PN } must exist such that every P[ i ] is waiting for P[ ( i + 1 ) % ( N + 1 ) ].
+### Memory
+* Registers->Cache->MainMemory->Secondary Memory
+> Contigious allocation
+* Here memory is allocated to processes without breaking it into parts
+* Less access time
+* External fragmentation(because even though we have space some times we can't allocate space to a process because we don't have it at one place)
+1. Fixed size-Partitioning(Not divided into equal parts): Here size is fixed before so it suffers from internal fragmentation when process size is not equal to partion size.
+2. Variable size Partitioning: Here partioning is not done before, Based on process the partitioning is done.No internal fragmentation.Partitioning is made at runtime
+> Non-Contigious Allocation
+* Here memory is allocated to processes by breaking into parts
+* More access time if proper data structure is not used
+* No external fragmentation
+* Designing is complicated
+> First fit,Best fit and worst fit
+* It allocates the space for the process at a place which has more or equal to the process size.(External Fragmentation may occur)
+* Best fit checks for the whole memory and allocates the least sized partition which has sufficient one.
+1. Paging
+* Physical address space is divided into frames and logical address space is divided into pages.
+* (https://media.geeksforgeeks.org/wp-content/uploads/paging-3.jpg)
+* page table is used to store frame no(base add) in main memory where index gives the offset.
+* memory access time is twice(to access frame no and access data)
+
+```
+cpu--- LA(p,d)
+
+          |  |
+
+          |  |____________________________
+
+          |                                +------->physical address in mm
+
+          |                                |         
+
+       Page table-----frameno(base address)|
+```
+2. Segmentation
+
+
+* Relocation register: Stores the base address of process
+* Logical address:Generated by cpu for execution
+* Physical address:Actual location in the memory
+* LA+Relocation register->PA
+* MMU : LA->PA
+
+
+
+
+### Beladys anamoly
+* Whenever we increase frame numbers assigned to a particular process in order to decrease page faults, it happens that page hits decrease and page faults increase.
+### Difference between mutex and semaphore
+* A mutex is used by a process to lock a resource. When one process has access to mutex other cannot access that resource. It happens only when prev process releases mutex.
+* As Semaphore is also used to have the resource with us but whenever a process holds the resource semaphore value reduces and semaphore value increase whenever the resource is released. Multiple process can hold resources using semaphores.
+### Virtual Memory
+* It gives illusion to the user that it can execute process having  more memory than that is present in main memory.
+Some pages of that process are brought into the mm and remaining pages are present in the hard disk itself. And whenever user want to know the locn of the page they can search in pagetable and if frame number of that page is not present in page table it means that they have to search for the page in storage and then fetch it from hard disk and store in mm. OS takes turn to do this and now again user takes the charge. Otherwise process can directly access the frame from page table and then they can just look into the main memory.
+> Effective Memory Access Time: p(page fault service time) + (1-p)*(main memory access time). when page fault occurs context switch b/w os and user and searching in hard disk and searching in mm.(order of ms)
+## Deadlock avoidance
+
+### Bankers algo
+
+
+
+
+### Logical address and Physical Address
+
+* Logical address is generated by CPU. It is used by MMU to convert into phy address which is actually present in the memory unit.
+* Logical address is also known as virtual address as it does not exist physically.
+* MMU is used to map logical address to physical address so that we indirectly acccess to memory.
+* User prg thinks that it runs in logical add but it needs phy address.
+* Logical Address Space is the set of all logical addresses generated by CPU for a program whereas the set of all physical address mapped to corresponding logical addresses is called Physical Address Space.
+
+### Fragmentation
+
+### Internal Fragmentation
+
+### External Fragmentation
+
+
+
+### Starvation
+
+Low priority process  not getting its chance to utilise cpu and other resources. Aging is used to avoid this.
+
+### Aging
+
+Used to increase priority of process that are undergoing starving
