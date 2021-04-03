@@ -55,3 +55,45 @@ CREATE TABLE Student(
 UPDATE Student
 SET major 'BIO'
 where major='BIOLOGY';
+
+
+
+## Trigger
+
+* Trigger is a stored procedure in database which automatically invokes whenever a special event in the database occurs
+#### Syntax
+
+create trigger `trigger_name`
+
+`before|after`
+
+`insert|delete|update`
+
+on `table_name`
+
+`for each row`
+
+`trigger body`
+
+* example
+
+create trigger ADD
+before
+insert
+on table_Student
+for each row
+set table_student.total=(student.s1+student.s2+student.s3), table_student.percentage=table_student.total*(60)/100;
+
+### Select employee who got 3rd highest salary in the table.
+select name
+from table t
+where 2=(select count(distinct(emp2.salary))
+             from table
+             where emp2.salary>emp1.salary);
+
+* char can hold upto 255 characters
+* varchar can hold upto 4000 characters
+* char is faster than varchar
+* char uses static memory allocation while varchar uses dynamic memory allocation
+
+
