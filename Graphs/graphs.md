@@ -233,6 +233,13 @@ return scc;
 [Link1](https://www.youtube.com/watch?v=Rs6DXyWpWrI)
 [Link2](https://www.geeksforgeeks.org/strongly-connected-components/#:~:text=A%20directed%20graph%20is%20strongly,SCCs%20in%20the%20following%20graph.)
 
+### Tarjan's Algorithm
+
+
+Used to find Connected components and variation of Kosarajus algo.
+
+
+
 ### Dijkstra Algo(SPSP)
 
 #### Algorithm:
@@ -433,7 +440,3 @@ int spanningTree(int V, int E, vector<vector<int>> &graph) {
 
 
 
-### Tarjan's Algorithm
-
-
-Used to find Connected components and variation of Kosarajus algo.
